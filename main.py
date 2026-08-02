@@ -2,14 +2,6 @@ from fileInteraction import file_manipulation
 from fileInteraction import read_files
 from fileInteraction import gather_agents
 
-
-
-
-
-
-
-
-
 def main():
 
     
