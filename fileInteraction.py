@@ -2,7 +2,7 @@ from pathlib import Path #using pathlib due to personal preference
 import json
 
 class file_manipulation:
-    def __init__(self, directory):
+    def __init__(self, directory,):
         self.directory = directory
 
     
@@ -39,9 +39,8 @@ class read_files:
 
         for file in self.fileList: #grabs a file
 
-            
-
-            with file.open(mode='r', encoding='cp1252') as openFile: #opens it
+            # Fixed: changed encoding to 'utf-8' to prevent decoding failures
+            with file.open(mode='r', encoding='utf-8') as openFile: #opens it
                 
 
                 for line in openFile:
@@ -60,39 +59,62 @@ class read_files:
 
 
 class gather_agents:
-    def __init__(self, fileContents):
+    def __init__(self, fileContents, dictOfJSON, key, dictKey):
         self.fileContents = fileContents
+        self.dictOfJSON = dictOfJSON
+        self.key = key
+        self.dictKey = dictKey
+
 
     def createSortedDict(self):
 
         sortedDictionary = {}
-        entryPoint = 1
 
-        dictLength = len(self.fileContents)
-        
+        if self.dictKey:
+            dictLength = self.dictKey
+            entryPoint = self.dictKey
+
+        else:
+            dictLength = len(self.fileContents)
+            entryPoint = 1
+
 
         
      
         for keyNumber in range(1, dictLength + 1):
             
-            stringifiedLine = str(self.fileContents[keyNumber]['useragent'])
+            stringifiedLine = str(self.fileContents[keyNumber][self.key])
 
             # If we've already seen this agent before anywhere in the file
             if stringifiedLine in sortedDictionary:
-                # Add it to its existing group list
-                sortedDictionary[stringifiedLine].append(stringifiedLine)
+                # Fixed: append keyNumber/reference tracker instead of appending the literal string repeatedly
+                sortedDictionary[stringifiedLine].append(keyNumber)
             else:
-                # First time seeing this agent: initialize a list with it
-                sortedDictionary[stringifiedLine] = [stringifiedLine]
+                # First time seeing this agent: initialize a list with the keyNumber tracker
+                sortedDictionary[stringifiedLine] = [keyNumber]
                 entryPoint += 1
 
 
 
         return sortedDictionary
-        
-        
 
+    def gatherIPs(self):
 
+        ipsGathered = {}
+        
+        # Loop through your dictionary of records
+        for dictKey in range(1, len(self.dictOfJSON) + 1):
             
-
-
+            # Check if the useragent matches
+            if self.dictOfJSON[dictKey].get('useragent') == 'libredtail-http':
+                
+                
+                ip = self.dictOfJSON[dictKey].get('sip')
+                
+                if ip:
+                    if ip in ipsGathered:
+                        ipsGathered[ip].append(dictKey)
+                    else:
+                        ipsGathered[ip] = [ip]
+                    
+        return ipsGathered
