@@ -132,10 +132,10 @@ class gather_agents:
                 # First time seeing this agent: initialize a list with it
                 sortedDictionary[stringifiedLine] = [stringifiedLine]
                 entryPoint += 1
-```
 
 
         return sortedDictionary
+```
         
         
 
