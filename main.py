@@ -2,6 +2,7 @@ from fileInteraction import file_manipulation
 from fileInteraction import read_files
 from fileInteraction import gather_agents
 
+
 def main():
 
     
@@ -12,11 +13,21 @@ def main():
 
     fileContents = read_files(fileList).createContentsList()
 
-    sortedUserAgents = gather_agents(fileContents).createSortedDict()
+    sortedUserAgents = gather_agents(fileContents, None, 'useragent', None).createSortedDict()
 
     libRedTailVisits = (len(sortedUserAgents['libredtail-http']))
 
     print(f" The libRedTail user agent visited {libRedTailVisits} times")
+
+    libRedTailIPs = gather_agents(None, fileContents,  None, None).gatherIPs()
+
+    totalIPS = len(libRedTailIPs)
+
+    print(f" The libRedTail user agent used {totalIPS} IP addresses")
+
+    for ip in libRedTailIPs.keys():
+
+        print(ip)
 
 
 
