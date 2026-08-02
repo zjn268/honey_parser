@@ -6,7 +6,7 @@ excuse. Dropped the code below too.
 from fileInteraction import file_manipulation
 from fileInteraction import read_files
 from fileInteraction import gather_agents
-
+```
 Main.py
 
 def main():
@@ -35,9 +35,14 @@ if __name__ == "__main__":
 
         """)                             
     main()
+```
+
 
 fileInteraction.py
 
+
+
+```
 from pathlib import Path #using pathlib due to personal preference 
 import json
 
@@ -125,7 +130,7 @@ class gather_agents:
                 # First time seeing this agent: initialize a list with it
                 sortedDictionary[stringifiedLine] = [stringifiedLine]
                 entryPoint += 1
-
+```
 
 
         return sortedDictionary
