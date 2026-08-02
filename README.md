@@ -6,9 +6,11 @@ excuse. Dropped the code below too.
 from fileInteraction import file_manipulation
 from fileInteraction import read_files
 from fileInteraction import gather_agents
-```
-Main.py
 
+# **Main.py**
+
+
+```
 def main():
 
     
@@ -38,7 +40,7 @@ if __name__ == "__main__":
 ```
 
 
-fileInteraction.py
+# **fileInteraction.py**
 
 
 
