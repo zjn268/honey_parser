@@ -1,0 +1,98 @@
+from pathlib import Path #using pathlib due to personal preference 
+import json
+
+class file_manipulation:
+    def __init__(self, directory):
+        self.directory = directory
+
+    
+    def gather_files(self):
+
+        directoryPath = Path(self.directory)
+        
+        try:  #function explicitly grabs json files from the directory I statically assigned in main
+            
+            if  directoryPath.is_dir():
+
+                dirFiles = directoryPath.glob('*.json')
+            
+                files = sorted(dirFiles)
+            
+                listFiles = list(files)
+            
+                return listFiles  # returns the .json files as a list   
+        
+        except Exception as excepter:
+
+            print(f'Its not working, try again {excepter}')
+
+
+
+class read_files:
+    def __init__(self, fileList):
+        self.fileList = fileList
+
+    def createContentsList(self):
+
+        dictOfItems = {} # prepares a dictionary for my file contents
+        entryCounter = 1 #makes the dictionary start at 1 and not 0 just personal preference
+
+        for file in self.fileList: #grabs a file
+
+            
+
+            with file.open(mode='r', encoding='cp1252') as openFile: #opens it
+                
+
+                for line in openFile:
+
+                    jsonObject = json.loads(line.strip())
+            
+
+                    dictOfItems[entryCounter] = jsonObject #drops each line in the dictionary from the file
+
+                    entryCounter += 1 # loops back again on a new key
+                
+    
+
+        
+        return dictOfItems #returns a dictionary of dictionaries
+
+
+class gather_agents:
+    def __init__(self, fileContents):
+        self.fileContents = fileContents
+
+    def createSortedDict(self):
+
+        sortedDictionary = {}
+        entryPoint = 1
+
+        dictLength = len(self.fileContents)
+        
+
+        
+     
+        for keyNumber in range(1, dictLength + 1):
+            
+            stringifiedLine = str(self.fileContents[keyNumber]['useragent'])
+
+            # If we've already seen this agent before anywhere in the file
+            if stringifiedLine in sortedDictionary:
+                # Add it to its existing group list
+                sortedDictionary[stringifiedLine].append(stringifiedLine)
+            else:
+                # First time seeing this agent: initialize a list with it
+                sortedDictionary[stringifiedLine] = [stringifiedLine]
+                entryPoint += 1
+
+
+
+        return sortedDictionary
+        
+        
+
+
+            
+
+
