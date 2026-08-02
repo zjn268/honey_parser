@@ -3,14 +3,17 @@ of the like visits my honeypot. There is definitely easier ways to accomplish wh
 I haven't been able to find an excuse to use python in a while. So I thought this would be a good 
 excuse. Dropped the code below too.
 
-from fileInteraction import file_manipulation
-from fileInteraction import read_files
-from fileInteraction import gather_agents
+
 
 # **Main.py**
 
 
 ```
+
+from fileInteraction import file_manipulation
+from fileInteraction import read_files
+from fileInteraction import gather_agents
+
 def main():
 
     
